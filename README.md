@@ -32,6 +32,34 @@ Capt Trimble
 | int64  | unsigned 64-bit value | typedef unsigned long long int64; |
 | sint64 | signed 64-bit value   |                                   |
 
+####Calling/Return Convention
+| Iteration | a  | b  | c  | d  | e  |
+|-----------|----|----|----|----|----|
+| 1st       | 2  | 2  | 3  | 4  | 2  |
+| 2nd       | 8  | 9  | 8  | 7  | 8  |
+| 3rd       | 14 | 15 | 15 | 13 | 15 |
+| 4th       | 20 | 21 | 20 | 19 | 20 |
+
+| Parameter                     | Value Sought |
+|-------------------------------|--------------|
+| Starting address of func      | 0xcoba       |
+| Ending address of func        | 0xc0c6       |
+| Register holding w            | R12          |
+| Register holding x            | R13          |
+| Register holding y            | R14          |
+| Register holding z            | R15          |
+| Register holding return value | R12          |
+
+####Cross language build constructs
+
+What is the role of the extern directive in a .c file?  
+
+The extern directive allows teh complied program to reference functions that are defined in external files. The compiler compiles the code without seeing the other files, so this directive is crucial.  
+
+What it the role of the .global driective in a .asm file?  
+
+The .global directive allows specific functions to be referenced and called by externaTl files. This occurs when the linker links together two or more object files.
+
 ##Lab
 
 ####Required Functionality
