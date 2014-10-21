@@ -67,6 +67,25 @@ The required functionality was easily implemented by editing the code given by D
 
 ![alt text](https://github.com/JasperArneberg/ECE382_Lab4/blob/master/imgae.png?raw=true "image")
 
+####Debugging
+The following code was used to make the program wait a specified period of time. Originally, the code did not wait nearly as long as it should.
+```
+//wait for a certain period of time
+int i = 1000000;
+while (i > 0) {
+i--;									//decrement
+}
+```
+
+The error was that the variable i was stored as an int. This has max value of 32,767. To fix this problem, i was stored as a long, which has a max value of over 2 billion, high enough for this functionality.
+
+```
+//wait for a certain period of time
+long i = 1000000;
+while (i > 0) {
+i--;									//decrement
+}
+```
 
 
 ##Documentation
