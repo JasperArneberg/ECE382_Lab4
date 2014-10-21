@@ -28,6 +28,39 @@ extern void drawBlock(unsigned char row, unsigned char col, unsigned char color)
 #define		X_START			1
 #define		Y_START			1
 
+#define 	HEIGHT 			6
+#define 	WIDTH 			6
+#define 	true 			1					//takes place of boolean
+#define 	false 			0
 
+/**
+ * This ball structure contains five parameters. Nested structures were
+ * originally used, but it added unnecessary complexity.
+ */
+typedef struct {
+	int xpos;
+	int ypos;
+	int xvel;
+	int yvel;
+	int radius;
+} ball;
+
+/**
+ * This function initializes a ball structure.
+ */
+ball createBall(int xpos, int ypos, int xvel, int yvel, int radius);
+
+/**
+ * This function "moves" a ball according to its velocity.
+ */
+ball moveBall(ball oldBall);
+
+/**
+ * These functions check for collisions.
+ */
+char detectxmin(int x);
+char detectxmax(int x);
+char detectymin(int y);
+char detectymax(int y);
 
 #endif /* LAB4_H_ */
