@@ -7,22 +7,7 @@
 //	Note:		Demonstration of how to combine C and assembly lanugage.
 //-------------------------------------------------------------------------------
 #include <msp430g2553.h>
-
-extern void init();
-extern void initNokia();
-extern void clearDisplay();
-extern void drawBlock(unsigned char row, unsigned char col, unsigned char color);
-
-#define		TRUE			1
-#define		FALSE			0
-#define		UP_BUTTON		(P2IN & BIT5)
-#define		DOWN_BUTTON		(P2IN & BIT4)
-#define		AUX_BUTTON		(P2IN & BIT3)
-#define		LEFT_BUTTON		(P2IN & BIT2)
-#define		RIGHT_BUTTON	(P2IN & BIT1)
-#define		WHITE			0
-#define		BLACK			1
-
+#include "lab4.h"
 
 void main() {
 
@@ -33,7 +18,6 @@ void main() {
 	WDTCTL=WDTPW+WDTHOLD; /* stop WD */
 	button_press = FALSE;
 	color = BLACK;
-
 
 	init();
 	initNokia();
