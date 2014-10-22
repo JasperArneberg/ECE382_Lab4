@@ -9,21 +9,20 @@ void main(void) {
     // === Initialize system ================================================
     	IFG1=0; /* clear interrupt flag1 */
     	WDTCTL=WDTPW+WDTHOLD; /* stop WD */
-    	char button_press = FALSE;
-    	char color = BLACK;
 
     	init();
     	initNokia();
     	clearDisplay();
 
-    ball myBall = createBall(X_START,Y_START,1,2,3); //creates ball at (0,0) with velocity (1,2) and radius 3
+    ball myBall = createBall(XPOS_0,YPOS_0,XVEL_0,YVEL_0,4); //creates ball at (0,0) with velocity (1,1) and radius 4
 
     while(1) {							//infinte loop
     	myBall = moveBall(myBall);		//put breakpoint here to observe ball movement
+    	clearDisplay();
        	drawBlock(myBall.xpos,myBall.ypos,BLACK);
 
     	//wait for a certain period of time
-    	long i = 1000000;
+    	long i = 500000;
     	while (i > 0) {
     	i--;                                    //decrement
     	}

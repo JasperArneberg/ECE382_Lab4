@@ -26,22 +26,22 @@ ball moveBall(ball oldBall) {
 	newBall.ypos = oldBall.ypos + oldBall.yvel;
 
 	if (detectxmin(newBall.xpos)==true) {				//check for collision
-		newBall.xpos = 0;								//reset to 0
+		newBall.xpos = 1;								//reset to 1
 		newBall.xvel = -newBall.xvel;					//switch velocity direction
 	}
 
 	if (detectxmax(newBall.xpos)==true) {
-		newBall.xpos = WIDTH;							//reset to max position
+		newBall.xpos = WIDTH-1;							//reset to max position - 1
 		newBall.xvel = -newBall.xvel;
 	}
 
 	if (detectymin(newBall.ypos)==true) {
-		newBall.ypos = 0;
+		newBall.ypos = 1;
 		newBall.yvel = -newBall.yvel;
 	}
 
 	if (detectymax(newBall.ypos)==true) {
-		newBall.ypos = HEIGHT;
+		newBall.ypos = HEIGHT-1;
 		newBall.yvel = -newBall.yvel;
 	}
 

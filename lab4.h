@@ -25,11 +25,13 @@ extern void drawBlock(unsigned char row, unsigned char col, unsigned char color)
 #define		WHITE			0
 #define		BLACK			1
 
-#define		X_START			1
-#define		Y_START			1
+#define		XPOS_0			1
+#define		YPOS_0			1
+#define		XVEL_0			1
+#define		YVEL_0			1
 
-#define 	HEIGHT 			6
-#define 	WIDTH 			6
+#define 	HEIGHT 			11
+#define 	WIDTH 			7
 #define 	true 			1					//takes place of boolean
 #define 	false 			0
 
