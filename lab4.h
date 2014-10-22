@@ -14,6 +14,7 @@ extern void init();
 extern void initNokia();
 extern void clearDisplay();
 extern void drawBlock(unsigned char row, unsigned char col, unsigned char color);
+extern void drawBall(unsigned char row, unsigned char col);
 
 #define		TRUE			1
 #define		FALSE			0

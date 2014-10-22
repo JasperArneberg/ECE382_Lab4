@@ -21,8 +21,8 @@ void main(void) {
     	myBall = moveBall(myBall);		//put breakpoint here to observe ball movement
     	myBall2 = moveBall(myBall2);
     	clearDisplay();
-       	drawBlock(myBall.xpos,myBall.ypos,BLACK);
-       	drawBlock(myBall2.xpos,myBall2.ypos,BLACK);
+       	drawBall(myBall.xpos,myBall.ypos);
+       	drawBall(myBall2.xpos,myBall2.ypos);
 
     	//wait for a certain period of time
     	long i = 500000;

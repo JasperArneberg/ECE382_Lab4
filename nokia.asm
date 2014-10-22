@@ -1,10 +1,11 @@
 ;-------------------------------------------------------------------------------
-;	Name:		Dr. Chris Coulston
+;	Name:		Dr. Chris Coulston -- modified by C2C Jasper Arneberg
 ;	Term:		Fall 2014
 ;	MCU:		MSP430G2553
 ;	Lecture:	22
 ;	Date:		16 October 2014
-;	Note:		Demonstration of how to combine C and assembly lanugage.
+;	Note:		Demonstration of how to combine C and assembly lanugage. Modified
+;				to include drawBall and extended drawBlock functionality.
 ;-------------------------------------------------------------------------------
 	.cdecls C,LIST,"msp430.h"		; BOILERPLATE	Include device header file
 
@@ -30,6 +31,7 @@ STE2007_DISPLAYON:				.equ	0xAF
 	.global initNokia
 	.global clearDisplay
 	.global drawBlock
+	.global	drawBall
 
 
 ;-------------------------------------------------------------------------------
@@ -374,6 +376,64 @@ loopdB:
 	jnz		loopdB
 
 	pop		R14
+	pop		R13
+	pop		R12
+	pop		R5
+
+	ret							; return whence you came
+
+;-------------------------------------------------------------------------------
+;	Name:		drawBall
+;	Inputs:		R12 row to draw block
+;				R13	column to draw block
+;	Outputs:	none
+;	Purpose:	This subroutine is very similar to drawBlock, except it draws a
+;				spherical ball instead of an 8x8 block.
+;	Registers:	R5	column counter to draw all 8 pixel columns
+;-------------------------------------------------------------------------------
+drawBall:
+	push	R5
+	push	R12
+	push	R13
+
+	rla.w	R13					; the column address needs multiplied
+	rla.w	R13					; by 8in order to convert it into a
+	rla.w	R13					; pixel address.
+	call	#setAddress			; move cursor to upper left corner of block
+
+	mov		#1, R12
+	clr		R5					; used for 8 loops
+
+loopBall:
+	cmp		#0,		R5
+	jz		col07
+	cmp		#7,		R5
+	jz		col07
+
+	cmp		#1,		R5
+	jz		col16
+	cmp		#6,		R5
+	jz		col16
+
+col2345:
+	mov.w	#0xFF,	R13
+	jmp		draw_time
+
+col07:
+	mov.w	#0x3C,	R13		;00111100
+	jmp		draw_time
+
+col16:
+	mov.w	#0x7E,	R13		;01111110
+	jmp		draw_time
+
+draw_time:
+	call	#writeNokiaByte		; draw the pixels
+
+	inc		R5
+	cmp		#8,		R5
+	jnz		loopBall
+
 	pop		R13
 	pop		R12
 	pop		R5
