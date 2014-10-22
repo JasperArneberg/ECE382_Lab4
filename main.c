@@ -20,14 +20,11 @@ void main(void) {
     while(1) {							//infinte loop
     	myBall = moveBall(myBall);		//put breakpoint here to observe ball movement
     	myBall2 = moveBall(myBall2);
+
     	clearDisplay();
        	drawBall(myBall.xpos,myBall.ypos);
        	drawBall(myBall2.xpos,myBall2.ypos);
 
-    	//wait for a certain period of time
-    	long i = 500000;
-    	while (i > 0) {
-    	i--;                                    //decrement
-    	}
+    	waitTime(DELAY);				//wait for a certain period of time
     }
 }

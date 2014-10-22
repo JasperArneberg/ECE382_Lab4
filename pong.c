@@ -79,3 +79,14 @@ char detectymax(int y) {
 	}
 	return false;
 }
+
+/**
+ * This function waits a specific amount of time
+ */
+void waitTime(long loops) {
+	long i = loops;
+	while (i > 0) {
+	i--;                                    //decrement
+	}
+	return;
+}

@@ -35,6 +35,7 @@ extern void drawBall(unsigned char row, unsigned char col);
 #define 	WIDTH 			7
 #define 	true 			1					//takes place of boolean
 #define 	false 			0
+#define		DELAY			500000
 
 /**
  * This ball structure contains five parameters. Nested structures were
@@ -65,5 +66,10 @@ char detectxmin(int x);
 char detectxmax(int x);
 char detectymin(int y);
 char detectymax(int y);
+
+/**
+ * This function waits a certain number of loops.
+ */
+void waitTime(long loops);
 
 #endif /* LAB4_H_ */
