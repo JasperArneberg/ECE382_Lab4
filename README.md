@@ -4,7 +4,7 @@ ECE382_Lab4
 Lab 4: Etch-a-Sketch and Pong
 
 C2C Jasper Arneberg  
-T5 ECE 382
+T5 ECE 382  
 Capt Trimble  
 
 ##Prelab
@@ -63,9 +63,140 @@ The .global directive allows specific functions to be referenced and called by e
 ##Lab
 
 ####Required Functionality
-The required functionality was easily implemented by editing the code given by Dr. Coulston on his website. A third parameter, color, was added as an input.
+The required functionality was to create an etch-a-sketch program. This was easily implemented by editing the code given by Dr. Coulston on his website. A third parameter, color, was added as an input to the drawBlock() subroutine. The new subroutine can be seen below:
 
-![alt text](https://github.com/JasperArneberg/ECE382_Lab4/blob/master/imgae.png?raw=true "image")
+```
+;-------------------------------------------------------------------------------
+;	Name:		drawBlock
+;	Inputs:		R12 row to draw block
+;				R13	column to draw block
+;				R14 color of block (white or black)
+;	Outputs:	none
+;	Purpose:	draw an 8x8 block of black pixels at screeen cordinates	8*row,8*col
+;				The display screen, for the purposes of this routine, is divided
+;				into 8x8 blocks.  Consequently the codinate system, for the purposes
+;				of this routine, start in the upper left of the screen @ (0,0) and
+;				end @ (11,7) in the lower right of the display.
+;	Registers:	R5	column counter to draw all 8 pixel columns
+;-------------------------------------------------------------------------------
+drawBlock:
+	push	R5
+	push	R12
+	push	R13
+	push 	R14
+
+	rla.w	R13					; the column address needs multiplied
+	rla.w	R13					; by 8in order to convert it into a
+	rla.w	R13					; pixel address.
+	call	#setAddress			; move cursor to upper left corner of block
+
+	mov		#1, R12
+	mov.w	#0x08, R5			; loop all 8 pixel columns
+
+	tst		R14
+	jz		white
+black:
+	mov		#0xFF, R13			; black
+	jmp 	loopdB
+white:	
+	mov		#0x00, R13			; white
+
+loopdB:
+	call	#writeNokiaByte		; draw the pixels
+	dec.w	R5
+	jnz		loopdB
+
+	pop		R14
+	pop		R13
+	pop		R12
+	pop		R5
+
+	ret							; return whence you came
+```
+
+####B Functionality
+A bouncing block program was created for B functionality. To accomplish this, the same structure that was used in Assignment 6 was carried over into this one.
+```
+typedef struct {
+	int xpos;
+	int ypos;
+	int xvel;
+	int yvel;
+	int radius;
+} ball;
+```
+
+The ball structure made it extremely easy to have multiple balls bouncing on the screen. It is important to note that the radius parameter had no use in this implementation, but it could be used to draw differently sized balls later on if desired. That's why it was left in as part of the structure.
+
+The createBall() and moveBall() functions were used multiple times when implementing this functionality. These functions allowed for modular and reusable code that made everything very organized.
+
+####A Functionality
+
+
+####Bonus Functionality: Multiple Balls
+Using the ball structure, multiple balls were initialized onto the screen. The balls were called myBall1 and myBall2 as can be seen in main.c. It would be easy to add in more balls if desired.
+
+####Bonus Functionality: Spherical Ball Shape
+In order to enhance the visual experience for the viewer, the ball was drawn as a sphere instead of a block. This was accomplished using a new subroutine entitled drawBall() in the nokia.asm file. This subroutine was modeled off drawBlock() and can be seen below:
+
+```
+;-------------------------------------------------------------------------------
+;	Name:		drawBall
+;	Inputs:		R12 row to draw block
+;				R13	column to draw block
+;	Outputs:	none
+;	Purpose:	This subroutine is very similar to drawBlock, except it draws a
+;				spherical ball instead of an 8x8 block.
+;	Registers:	R5	column counter to draw all 8 pixel columns
+;-------------------------------------------------------------------------------
+drawBall:
+	push	R5
+	push	R12
+	push	R13
+
+	rla.w	R13					; the column address needs multiplied
+	rla.w	R13					; by 8in order to convert it into a
+	rla.w	R13					; pixel address.
+	call	#setAddress			; move cursor to upper left corner of block
+
+	mov		#1, R12
+	clr		R5					; used for 8 loops
+
+loopBall:
+	cmp		#0,		R5
+	jz		col07
+	cmp		#7,		R5
+	jz		col07
+	cmp		#1,		R5
+	jz		col16
+	cmp		#6,		R5
+	jz		col16
+
+col2345:						;columns 2,3,4,5
+	mov.w	#0xFF,	R13			;11111111
+	jmp		draw_time
+
+col07:							;columns 0 and 7
+	mov.w	#0x3C,	R13			;00111100
+	jmp		draw_time
+
+col16:							;columns 1 and 6
+	mov.w	#0x7E,	R13			;01111110
+	jmp		draw_time
+
+draw_time:
+	call	#writeNokiaByte		; draw the pixels
+
+	inc		R5
+	cmp		#8,		R5
+	jnz		loopBall
+
+	pop		R13
+	pop		R12
+	pop		R5
+
+	ret							; return whence you came
+```
 
 ####Debugging
 The following code was used to make the program wait a specified period of time. Originally, the code did not wait nearly as long as it should.
@@ -87,6 +218,20 @@ i--;									//decrement
 }
 ```
 
+Originally, drawBall() did not draw an acutal sphere. It was determined that the problem lay in this part of the subroutine:
+```
+col16:							;columns 1 and 6
+	mov.w	#0x7D,	R13			;01111110
+	jmp		draw_time
+```
+
+After a long period of thinking, it was finally realized that the hex value for 01111110 was 0x7E instead of 0x7D. Once this was corrected, the program ran as expected.
+
+```
+col16:							;columns 1 and 6
+	mov.w	#0x7E,	R13			;01111110
+	jmp		draw_time
+```
 
 ##Documentation
 I used http://www.tablesgenerator.com/markdown_tables to generate markdown tables efficiently. 
