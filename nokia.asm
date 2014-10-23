@@ -365,10 +365,10 @@ drawBlock:
 	tst		R14
 	jz		white
 black:
-	mov		#0xFF, R13
+	mov		#0xFF, R13			; black
 	jmp 	loopdB
 white:
-	mov		#0x00, R13
+	mov		#0x00, R13			; white
 
 loopdB:
 	call	#writeNokiaByte		; draw the pixels
@@ -409,22 +409,21 @@ loopBall:
 	jz		col07
 	cmp		#7,		R5
 	jz		col07
-
 	cmp		#1,		R5
 	jz		col16
 	cmp		#6,		R5
 	jz		col16
 
-col2345:
-	mov.w	#0xFF,	R13
+col2345:						;columns 2,3,4,5
+	mov.w	#0xFF,	R13			;11111111
 	jmp		draw_time
 
-col07:
-	mov.w	#0x3C,	R13		;00111100
+col07:							;columns 0 and 7
+	mov.w	#0x3C,	R13			;00111100
 	jmp		draw_time
 
-col16:
-	mov.w	#0x7E,	R13		;01111110
+col16:							;columns 1 and 6
+	mov.w	#0x7E,	R13			;01111110
 	jmp		draw_time
 
 draw_time:

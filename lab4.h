@@ -30,6 +30,7 @@ extern void drawBall(unsigned char row, unsigned char col);
 #define		YPOS_0			1
 #define		XVEL_0			1
 #define		YVEL_0			1
+#define 	PADDLEPOS_0		0
 
 #define 	HEIGHT 			11
 #define 	WIDTH 			7
@@ -57,7 +58,7 @@ ball createBall(int xpos, int ypos, int xvel, int yvel, int radius);
 /**
  * This function "moves" a ball according to its velocity.
  */
-ball moveBall(ball oldBall);
+ball moveBall(ball oldBall, int paddlePos);
 
 /**
  * These functions check for collisions.
@@ -71,5 +72,11 @@ char detectymax(int y);
  * This function waits a certain number of loops.
  */
 void waitTime(long loops);
+
+void drawPaddle(int y);
+
+int movePaddle(int y);
+
+char checkPaddle(ball myBall, int paddlePos);
 
 #endif /* LAB4_H_ */

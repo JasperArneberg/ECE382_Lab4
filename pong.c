@@ -3,6 +3,7 @@
  */
 
 #include "lab4.h"
+#include <msp430.h>
 
 /**
  * This function creates a ball with all of the necessary parameters.
@@ -20,7 +21,7 @@ ball createBall(int xpos, int ypos, int xvel, int yvel, int radius) {
 /**
  * This function returns a ball with updated ball structure.
  */
-ball moveBall(ball oldBall) {
+ball moveBall(ball oldBall, int paddlePos) {
 	ball newBall = oldBall;								//keeps default values the same
 	newBall.xpos = oldBall.xpos + oldBall.xvel;
 	newBall.ypos = oldBall.ypos + oldBall.yvel;
@@ -30,10 +31,16 @@ ball moveBall(ball oldBall) {
 		newBall.xvel = -newBall.xvel;					//switch velocity direction
 	}
 
+
 	if (detectxmax(newBall.xpos)==true) {
-		newBall.xpos = WIDTH-1;							//reset to max position - 1
-		newBall.xvel = -newBall.xvel;
+		if (oldBall.ypos == paddlePos || oldBall.ypos == (paddlePos + 1)) {
+			newBall.xpos = WIDTH-1;							//reset to max position - 1
+			newBall.xvel = -newBall.xvel;
+		} else {
+			newBall.xpos = 0;							//reset
+		}
 	}
+
 
 	if (detectymin(newBall.ypos)==true) {
 		newBall.ypos = 1;
@@ -89,4 +96,38 @@ void waitTime(long loops) {
 	i--;                                    //decrement
 	}
 	return;
+}
+
+/**
+ * This function draws a paddle for a given y coordinate from 0 to HEIGHT
+ */
+void drawPaddle(int y) {
+	drawBlock(WIDTH+1,y,BLACK);
+   	drawBlock(WIDTH+1,y+1,BLACK);
+}
+
+/**
+ * This function moves the paddle in response to a button press
+ */
+int movePaddle(int pos) {
+	if (LEFT_BUTTON == 0) {
+		pos--;
+	}
+	if (RIGHT_BUTTON == 0) {
+		pos++;
+	}
+	return pos;
+}
+
+/**
+ * This function ensures that there is a paddle where the ball is bouncing.
+ */
+char checkPaddle(ball myBall, int paddlePos) {
+	char result = true;
+	if (detectxmax(myBall.xpos) == true) {
+		if (myBall.ypos != paddlePos && myBall.ypos != paddlePos + 1) {
+			result = false;
+		}
+	}
+	return result;
 }
