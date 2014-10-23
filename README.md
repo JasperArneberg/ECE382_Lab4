@@ -10,6 +10,7 @@ Capt Trimble
 ##Prelab
 
 ####Data Types
+This table shows the minimum and maximum values of different data types in C.
 | Size   | Signed/Unsigned | Type                 | Min value                  | Max value                  |
 |--------|-----------------|----------------------|----------------------------|----------------------------|
 | 8-bit  | unsigned        | unsigned char        | 0                          | 255                        |
@@ -21,6 +22,7 @@ Capt Trimble
 | 64-bit | unsigned        | unsigned long long   | 0                          | 18,446,744,073,709,551,615 |
 | 64-bit | signed          | long long            | -9,223,372,036,854,775,808 | 9,223,372,036,854,775,807  |
 
+This table shows the typedef declarations. These can be used to solidify the connection between the data type and the number of bits that are stored.
 | Type   | Meaning               | C typedef declaration             |
 |--------|-----------------------|-----------------------------------|
 | int8   | unsigned 8-bit value  | typedef unsigned char int8;       |
@@ -33,6 +35,7 @@ Capt Trimble
 | sint64 | signed 64-bit value   |                                   |
 
 ####Calling/Return Convention
+This table was used to investigate how inputs and outputs are stored within a function.
 | Iteration | a  | b  | c  | d  | e  |
 |-----------|----|----|----|----|----|
 | 1st       | 2  | 2  | 3  | 4  | 2  |
@@ -40,6 +43,7 @@ Capt Trimble
 | 3rd       | 14 | 15 | 15 | 13 | 15 |
 | 4th       | 20 | 21 | 20 | 19 | 20 |
 
+This table shows where the values are stored when the C code is assembled.
 | Parameter                     | Value Sought |
 |-------------------------------|--------------|
 | Starting address of func      | 0xcoba       |
@@ -54,7 +58,7 @@ Capt Trimble
 
 What is the role of the extern directive in a .c file?  
 
-The extern directive allows teh complied program to reference functions that are defined in external files. The compiler compiles the code without seeing the other files, so this directive is crucial.  
+The extern directive allows the complied program to reference functions that are defined in external files. The compiler compiles the code without seeing the other files, so this directive is crucial.  
 
 What it the role of the .global driective in a .asm file?  
 
@@ -131,14 +135,23 @@ The ball structure made it extremely easy to have multiple balls bouncing on the
 The createBall() and moveBall() functions were used multiple times when implementing this functionality. These functions allowed for modular and reusable code that made everything very organized.
 
 ####A Functionality
-
+The A functionality required creating the game of pong. Since the bouncing ball was already implemented, the only step remaining was to incorporate the paddle. The paddle was drawn using two calls to drawBlock(), and the position was tracked with the variable paddlePos. The most difficult section of code is shown below within the moveBall() function. This code tested to see whether or not the paddle was underneath the ball. If the paddle was absent, the game restarted.
+```
+	if (detectxmax(newBall.xpos)==true) {
+		if (oldBall.ypos == paddlePos || oldBall.ypos == (paddlePos + 1)) {
+			newBall.xpos = WIDTH-1;							//reset to max position - 1
+			newBall.xvel = -newBall.xvel;
+		} else {
+			newBall.xpos = 0;							//start game over
+		}
+	}
+```
 
 ####Bonus Functionality: Multiple Balls
 Using the ball structure, multiple balls were initialized onto the screen. The balls were called myBall1 and myBall2 as can be seen in main.c. It would be easy to add in more balls if desired.
 
 ####Bonus Functionality: Spherical Ball Shape
 In order to enhance the visual experience for the viewer, the ball was drawn as a sphere instead of a block. This was accomplished using a new subroutine entitled drawBall() in the nokia.asm file. This subroutine was modeled off drawBlock() and can be seen below:
-
 ```
 ;-------------------------------------------------------------------------------
 ;	Name:		drawBall
@@ -197,6 +210,9 @@ draw_time:
 
 	ret							; return whence you came
 ```
+
+####Bonus Functionality: Color Inversion
+The program was enhanced to invert colors with the press of the auxilliary button (SW 3). This was implemented by adding in a color parameter, colorMode, to the drawBlock(), drawBall(), clearScreen(), and drawPaddle() methods.
 
 ####Debugging
 The following code was used to make the program wait a specified period of time. Originally, the code did not wait nearly as long as it should.
