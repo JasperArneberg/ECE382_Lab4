@@ -34,10 +34,13 @@ ball moveBall(ball oldBall, int paddlePos) {
 
 	if (detectxmax(newBall.xpos)==true) {
 		if (oldBall.ypos == paddlePos || oldBall.ypos == (paddlePos + 1)) {
-			newBall.xpos = WIDTH-1;							//reset to max position - 1
+			newBall.xpos = WIDTH-1;						//reset to max position - 1
 			newBall.xvel = -newBall.xvel;
 		} else {
-			newBall.xpos = 0;							//reset
+			newBall.xvel = 0;							//start game over
+			newBall.yvel = 0;
+			newBall.xpos = 0;
+			newBall.ypos = 0;
 		}
 	}
 
