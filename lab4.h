@@ -2,9 +2,9 @@
   * Title: Lab 4: Etch-a-Sketch and Pong
   * Author: C2C Jasper Arneberg
   * Created: 21 Oct 2014
-  * Description: This header file defines buttons and
-  * other constants for implementation in the main.c or
-  * pong.c files.
+  * Description: This header file defines all buttons, functions, and
+  * constants for implementation in the main.c or pong.c files.
+  *
 *******************************************/
 
 #ifndef LAB4_H_
@@ -32,7 +32,7 @@ extern void drawBall(unsigned char row, unsigned char col, unsigned char color);
 #define		YVEL_0			1
 #define 	PADDLEPOS_0		0
 
-#define 	HEIGHT 			11
+#define 	HEIGHT 			11					//dimension of display
 #define 	WIDTH 			7
 #define 	true 			1					//takes place of boolean
 #define 	false 			0

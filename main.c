@@ -2,7 +2,7 @@
  * This is the main.c file. The main loop is contained here.
  */
 
-#include <msp430.h>
+#include <msp430.h>						//header files
 #include "lab4.h"
 
 void main(void) {
@@ -33,12 +33,12 @@ void main(void) {
 
     	colorMode = checkColor(colorMode);
     	clearDisplay(colorMode);
+
        	drawBall(myBall.xpos,myBall.ypos,colorMode);
        	drawBall(myBall2.xpos,myBall2.ypos,colorMode);
        	drawBall(myBall3.xpos,myBall3.ypos,colorMode);
        	drawBall(myBall4.xpos,myBall4.ypos,colorMode);
        	drawPaddle(paddlePos,colorMode);
-
 
     	waitTime(DELAY);				//wait for a certain period of time
     }
