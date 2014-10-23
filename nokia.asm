@@ -186,7 +186,7 @@ pollSPI:
 
 ;-------------------------------------------------------------------------------
 ;	Name:		clearDisplay
-;	Inputs:		none
+;	Inputs:		R12 -- color mode (black/white)
 ;	Outputs:	none
 ;	Purpose:	Writes 0x360 blank 8-bit columns to the Nokia display
 ;-------------------------------------------------------------------------------
@@ -195,14 +195,22 @@ clearDisplay:
 	push	R12
 	push	R13
 
+	mov.w	R12,	R14
+
 	mov.w	#0x00, R12			; set display address to 0,0
 	mov.w	#0x00, R13
 	call	#setAddress
 
 	mov.w	#0x01, R12			; write a "clear" set of pixels
-	mov.w	#0x00, R13			; to every byt on the display
-
 	mov.w	#0x360, R11			; loop counter
+
+	tst		R14
+	jnz		clearBlack
+	mov.w	#0xFF, R13			; to every byte on the display
+	jmp		clearLoop
+clearBlack:
+	mov.w	#0x00, R13
+
 clearLoop:
 	call	#writeNokiaByte
 	dec.w	R11
@@ -386,6 +394,7 @@ loopdB:
 ;	Name:		drawBall
 ;	Inputs:		R12 row to draw block
 ;				R13	column to draw block
+;				R14 color (black/white)
 ;	Outputs:	none
 ;	Purpose:	This subroutine is very similar to drawBlock, except it draws a
 ;				spherical ball instead of an 8x8 block.
@@ -395,6 +404,7 @@ drawBall:
 	push	R5
 	push	R12
 	push	R13
+	push	R14
 
 	rla.w	R13					; the column address needs multiplied
 	rla.w	R13					; by 8in order to convert it into a
@@ -415,15 +425,30 @@ loopBall:
 	jz		col16
 
 col2345:						;columns 2,3,4,5
-	mov.w	#0xFF,	R13			;11111111
+	tst		R14
+	jz		white2345
+	mov		#0xFF,	R13			;11111111
+	jmp		draw_time
+white2345:
+	mov		#0x00,	R13
 	jmp		draw_time
 
 col07:							;columns 0 and 7
+	tst		R14
+	jz 		white07
 	mov.w	#0x3C,	R13			;00111100
 	jmp		draw_time
+white07:
+	mov		#0xC3,	R13
+	jmp 	draw_time
 
 col16:							;columns 1 and 6
+	tst		R14
+	jz 		white16
 	mov.w	#0x7E,	R13			;01111110
+	jmp		draw_time
+white16:
+	mov		#0x81,	R13
 	jmp		draw_time
 
 draw_time:
@@ -433,6 +458,7 @@ draw_time:
 	cmp		#8,		R5
 	jnz		loopBall
 
+	pop		R14
 	pop		R13
 	pop		R12
 	pop		R5

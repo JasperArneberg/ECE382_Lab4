@@ -101,9 +101,9 @@ void waitTime(long loops) {
 /**
  * This function draws a paddle for a given y coordinate from 0 to HEIGHT
  */
-void drawPaddle(int y) {
-	drawBlock(WIDTH+1,y,BLACK);
-   	drawBlock(WIDTH+1,y+1,BLACK);
+void drawPaddle(int y, unsigned char color) {
+	drawBlock(WIDTH+1,y,color);
+   	drawBlock(WIDTH+1,y+1,color);
 }
 
 /**
@@ -129,5 +129,20 @@ char checkPaddle(ball myBall, int paddlePos) {
 			result = false;
 		}
 	}
+	return result;
+}
+
+/**
+ * This function changes the color mode if the AUX button is pressed.
+ */
+char checkColor(char colorMode) {
+	char result = colorMode;
+		if (AUX_BUTTON == 0) {
+			if (colorMode == BLACK) {
+				result = WHITE;
+			} else {
+				result = BLACK;
+			}
+		}
 	return result;
 }

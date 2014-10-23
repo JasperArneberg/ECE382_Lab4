@@ -12,31 +12,26 @@ void main(void) {
 
     	init();
     	initNokia();
-    	clearDisplay();
+    	clearDisplay(WHITE);
 
     ball myBall = createBall(XPOS_0,YPOS_0,XVEL_0,YVEL_0,4); //creates ball at (1,1) with velocity (1,1) and radius 4
     //ball myBall2 = createBall(3,4,-1,1,4);
 
     int paddlePos = PADDLEPOS_0;
+    unsigned char colorMode = BLACK;	//initialize color variable
 
     while(1) {							//infinte loop
 
     	myBall = moveBall(myBall, paddlePos);
     	//myBall2 = moveBall(myBall2);
 
-    	/**
-    	if (checkPaddle(myBall,paddlePos)==false) {
-    		clearDisplay();
-    		waitTime(DELAY*5);
-    	}
-    	*/
-
     	paddlePos = movePaddle(paddlePos);
 
-    	clearDisplay();
-       	drawBall(myBall.xpos,myBall.ypos);
+    	colorMode = checkColor(colorMode);
+    	clearDisplay(colorMode);
+       	drawBall(myBall.xpos,myBall.ypos,colorMode);
        	//drawBall(myBall2.xpos,myBall2.ypos);
-       	drawPaddle(paddlePos);
+       	drawPaddle(paddlePos,colorMode);
 
 
     	waitTime(DELAY);				//wait for a certain period of time

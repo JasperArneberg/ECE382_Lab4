@@ -12,9 +12,9 @@
 
 extern void init();
 extern void initNokia();
-extern void clearDisplay();
+extern void clearDisplay(unsigned char color);
 extern void drawBlock(unsigned char row, unsigned char col, unsigned char color);
-extern void drawBall(unsigned char row, unsigned char col);
+extern void drawBall(unsigned char row, unsigned char col, unsigned char color);
 
 #define		TRUE			1
 #define		FALSE			0
@@ -73,10 +73,12 @@ char detectymax(int y);
  */
 void waitTime(long loops);
 
-void drawPaddle(int y);
+void drawPaddle(int y, unsigned char color);
 
 int movePaddle(int y);
 
 char checkPaddle(ball myBall, int paddlePos);
+
+char checkColor(char colorMode);
 
 #endif /* LAB4_H_ */
