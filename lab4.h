@@ -5,6 +5,13 @@
   * Description: This header file defines all buttons, functions, and
   * constants for implementation in the main.c or pong.c files.
   *
+  * The code for the Etch-a-Sketch can be found in etch.c. This program
+  * turns the LCD into a drawing tool. The auxilliary button switches
+  * the color between white and black.
+  *
+  * The code for Pong can be found in pong.c and main.c. Thse files turn the
+  * LCD into the classical game of Pong. The player controls the paddle
+  * using the left and right paddles integrated with the nokia LCD.
 *******************************************/
 
 #ifndef LAB4_H_
