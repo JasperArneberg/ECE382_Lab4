@@ -148,7 +148,7 @@ The A functionality required creating the game of pong. Since the bouncing ball 
 ```
 
 ####Bonus Functionality: Multiple Balls
-Using the ball structure, multiple balls were initialized onto the screen. The balls were called myBall1 and myBall2 as can be seen in main.c. It would be easy to add in more balls if desired.
+Using the ball structure, multiple balls were initialized onto the screen. The balls were named myBall, myBall2, myBall3, and myBall4 as can be seen in main.c. This made a very challenging game for the player to try to keep multiple balls in the air.
 
 ####Bonus Functionality: Spherical Ball Shape
 In order to enhance the visual experience for the viewer, the ball was drawn as a sphere instead of a block. This was accomplished using a new subroutine entitled drawBall() in the nokia.asm file. This subroutine was modeled off drawBlock() and can be seen below:
